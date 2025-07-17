@@ -63,119 +63,139 @@ export default function CreateTokenForm() {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-xl shadow-lg p-6 border border-gray-200">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg">
-          <Coins className="w-6 h-6 text-white" />
-        </div>
-        <h2 className="text-2xl font-bold text-gray-800">Create Meme Token</h2>
-      </div>
-
-      {!connected && (
-        <div className="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <div className="flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-yellow-500 mt-0.5" />
-            <p className="text-yellow-800">Please connect your wallet to create a token</p>
-          </div>
-        </div>
-      )}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Token Name
-          </label>
-          <input
-            type="text"
-            value={formData.memeName}
-            onChange={(e) => setFormData({ ...formData, memeName: e.target.value })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
-            placeholder="Enter your meme token name"
-            required
-            maxLength={32}
-          />
-          <p className="text-xs text-gray-500 mt-1">Max 32 characters</p>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Initial Supply
-          </label>
-          <input
-            type="number"
-            value={formData.supply}
-            onChange={(e) => setFormData({ ...formData, supply: e.target.value })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
-            placeholder="1000000"
-            required
-            min="0"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Decimals
-          </label>
-          <select
-            value={formData.decimals}
-            onChange={(e) => setFormData({ ...formData, decimals: parseInt(e.target.value) })}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
-            title="Select token decimals"
-          >
-            {[0, 2, 6, 8, 9].map((decimal) => (
-              <option key={decimal} value={decimal}>
-                {decimal} decimals
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <button
-          type="submit"
-          disabled={loading || !connected}
-          className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-3 px-4 rounded-lg hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center gap-2"
-        >
-          {loading ? (
-            <>
-              <Loader2 className="w-4 h-4 animate-spin" />
-              Creating Token...
-            </>
-          ) : (
-            <>
-              <Coins className="w-4 h-4" />
-              Create Token
-            </>
-          )}
-        </button>
-      </form>
-
-      {result && (
-        <div className={`mt-4 p-4 rounded-lg ${
-          result.type === 'success' 
-            ? 'bg-green-50 border border-green-200' 
-            : 'bg-red-50 border border-red-200'
-        }`}>
-          <div className="flex items-start gap-3">
-            {result.type === 'success' ? (
-              <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
-            ) : (
-              <AlertCircle className="w-5 h-5 text-red-500 mt-0.5" />
-            )}
-            <div className="flex-1">
-              <p className={`font-medium ${
-                result.type === 'success' ? 'text-green-800' : 'text-red-800'
-              }`}>
-                {result.message}
-              </p>
-              {result.data && (
-                <div className="mt-2 text-sm text-green-700">
-                  <p><strong>Signature:</strong> {result.data.signature}</p>
-                  <p><strong>Mint:</strong> {result.data.mint}</p>
-                </div>
-              )}
+    <div className="max-w-lg mx-auto">
+      <div className="card card-hover p-8 backdrop-blur-sm bg-card/90 animate-slide-up">
+        <div className="flex items-center gap-4 mb-8">
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl blur-md opacity-30"></div>
+            <div className="relative p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl">
+              <Coins className="w-7 h-7 text-white" />
             </div>
           </div>
+          <h2 className="text-3xl font-bold text-foreground">Create Meme Token</h2>
         </div>
-      )}
+
+        {!connected && (
+          <div className="mb-6 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+              <p className="text-amber-800 dark:text-amber-200 font-medium">
+                Please connect your wallet to create a token
+              </p>
+            </div>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-foreground">
+              Token Name
+            </label>
+            <input
+              type="text"
+              value={formData.memeName}
+              onChange={(e) => setFormData({ ...formData, memeName: e.target.value })}
+              className="input w-full h-12 text-lg focus-ring"
+              placeholder="Enter your meme token name"
+              required
+              maxLength={32}
+            />
+            <p className="text-xs text-muted-foreground">Max 32 characters</p>
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-foreground">
+              Initial Supply
+            </label>
+            <input
+              type="number"
+              value={formData.supply}
+              onChange={(e) => setFormData({ ...formData, supply: e.target.value })}
+              className="input w-full h-12 text-lg focus-ring"
+              placeholder="1000000"
+              required
+              min="0"
+            />
+            <p className="text-xs text-muted-foreground">Number of tokens to mint initially</p>
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-foreground">
+              Decimals
+            </label>
+            <select
+              value={formData.decimals}
+              onChange={(e) => setFormData({ ...formData, decimals: parseInt(e.target.value) })}
+              className="input w-full h-12 text-lg focus-ring"
+              title="Select token decimals"
+            >
+              {[0, 2, 6, 8, 9].map((decimal) => (
+                <option key={decimal} value={decimal}>
+                  {decimal} decimals
+                </option>
+              ))}
+            </select>
+            <p className="text-xs text-muted-foreground">Token precision (9 is standard)</p>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading || !connected}
+            className="w-full btn-primary h-14 text-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+          >
+            {loading ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                Creating Token...
+              </>
+            ) : (
+              <>
+                <Coins className="w-5 h-5" />
+                Create Token
+              </>
+            )}
+          </button>
+        </form>
+
+        {result && (
+          <div className={`mt-6 p-5 rounded-xl border animate-fade-in ${
+            result.type === 'success' 
+              ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800' 
+              : 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800'
+          }`}>
+            <div className="flex items-start gap-4">
+              {result.type === 'success' ? (
+                <CheckCircle className="w-6 h-6 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+              ) : (
+                <AlertCircle className="w-6 h-6 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
+              )}
+              <div className="flex-1">
+                <p className={`font-semibold text-lg ${
+                  result.type === 'success' 
+                    ? 'text-emerald-800 dark:text-emerald-200' 
+                    : 'text-red-800 dark:text-red-200'
+                }`}>
+                  {result.message}
+                </p>
+                {result.data && (
+                  <div className="mt-3 space-y-2 text-sm text-emerald-700 dark:text-emerald-300">
+                    <div className="p-3 bg-emerald-100 dark:bg-emerald-800/30 rounded-lg">
+                      <p className="font-mono break-all">
+                        <strong>Signature:</strong> {result.data.signature}
+                      </p>
+                    </div>
+                    <div className="p-3 bg-emerald-100 dark:bg-emerald-800/30 rounded-lg">
+                      <p className="font-mono break-all">
+                        <strong>Mint Address:</strong> {result.data.mint}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

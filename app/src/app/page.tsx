@@ -43,93 +43,107 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<'create' | 'search'>('create');
 
   return (
-    <div className="min-h-screen p-4 sm:p-8">
-      {/* Header */}
-      <header className="max-w-6xl mx-auto mb-8">
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl">
-              <Sparkles className="w-8 h-8 text-white" />
+    <div className="min-h-screen">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMyMjIiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djZoNnYtNmgtNnptNiA2djZoLTZ2LTZoNnptLTYtMTJ2NmgtNnYtNmg2em0tNiAwdjZoLTZ2LTZoNnptMTIgMHY2aDZWMzRoLTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-30 dark:opacity-10"></div>
+      
+      <div className="relative z-10 p-4 sm:p-8">
+        {/* Header */}
+        <header className="max-w-6xl mx-auto mb-12 animate-fade-in">
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl blur-lg opacity-30"></div>
+                <div className="relative p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl shadow-lg">
+                  <Sparkles className="w-10 h-10 text-white" />
+                </div>
+              </div>
+              <h1 className="text-5xl sm:text-6xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+                Meme Token Creator
+              </h1>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Meme Token Creator
-            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Create and manage your own meme tokens on Solana blockchain. 
+              Connect your wallet and start building the next viral token!
+            </p>
           </div>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Create and manage your own meme tokens on Solana blockchain. 
-            Connect your wallet and start building the next viral token!
-          </p>
-        </div>
-        
-        <WalletButton />
-      </header>
+          
+          <WalletButton />
+        </header>
 
-      {/* Navigation Tabs */}
-      <div className="max-w-4xl mx-auto mb-8">
-        <div className="flex justify-center">
-          <div className="bg-white rounded-lg p-1 shadow-lg border border-gray-200">
-            <button
-              type="button"
-              onClick={() => setActiveTab('create')}
-              className={`flex items-center gap-2 px-6 py-3 rounded-md font-medium transition-all duration-200 ${
-                activeTab === 'create'
-                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md'
-                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
-              }`}
-            >
-              <Coins className="w-4 h-4" />
-              Create Token
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab('search')}
-              className={`flex items-center gap-2 px-6 py-3 rounded-md font-medium transition-all duration-200 ${
-                activeTab === 'search'
-                  ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-md'
-                  : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
-              }`}
-            >
-              <Search className="w-4 h-4" />
-              Search Tokens
-            </button>
+        {/* Navigation Tabs */}
+        <div className="max-w-4xl mx-auto mb-12 animate-slide-up">
+          <div className="flex justify-center">
+            <div className="card p-2 shadow-lg backdrop-blur-sm bg-card/80">
+              <button
+                type="button"
+                onClick={() => setActiveTab('create')}
+                className={`flex items-center gap-3 px-8 py-4 rounded-lg font-semibold transition-all duration-300 ${
+                  activeTab === 'create'
+                    ? 'gradient-purple-pink text-white shadow-lg transform scale-105'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                }`}
+              >
+                <Coins className="w-5 h-5" />
+                Create Token
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('search')}
+                className={`flex items-center gap-3 px-8 py-4 rounded-lg font-semibold transition-all duration-300 ${
+                  activeTab === 'search'
+                    ? 'gradient-blue-cyan text-white shadow-lg transform scale-105'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                }`}
+              >
+                <Search className="w-5 h-5" />
+                Search Tokens
+              </button>
+            </div>
           </div>
         </div>
+
+        {/* Main Content */}
+        <main className="max-w-4xl mx-auto animate-fade-in">
+          {activeTab === 'create' ? (
+            <div className="space-y-8">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold text-foreground mb-3">Create Your Meme Token</h2>
+                <p className="text-lg text-muted-foreground">
+                  Fill in the details below to create your custom meme token on Solana
+                </p>
+              </div>
+              <CreateTokenForm />
+            </div>
+          ) : (
+            <div className="space-y-8">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold text-foreground mb-3">Search Token Metadata</h2>
+                <p className="text-lg text-muted-foreground">
+                  Enter a token name to view its metadata and information
+                </p>
+              </div>
+              <TokenMetadataViewer />
+            </div>
+          )}
+        </main>
+
+        {/* Footer */}
+        <footer className="max-w-6xl mx-auto mt-20 pt-8 border-t border-border">
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-pulse"></div>
+              <p className="text-muted-foreground font-medium">
+                Built with ❤️ for the Solana ecosystem
+              </p>
+              <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-pulse"></div>
+            </div>
+            <p className="text-sm text-muted-foreground/80">
+              Make sure you're connected to Solana Devnet for testing
+            </p>
+          </div>
+        </footer>
       </div>
-
-      {/* Main Content */}
-      <main className="max-w-4xl mx-auto">
-        {activeTab === 'create' ? (
-          <div className="space-y-8">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Create Your Meme Token</h2>
-              <p className="text-gray-600">
-                Fill in the details below to create your custom meme token on Solana
-              </p>
-            </div>
-            <CreateTokenForm />
-          </div>
-        ) : (
-          <div className="space-y-8">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Search Token Metadata</h2>
-              <p className="text-gray-600">
-                Enter a token name to view its metadata and information
-              </p>
-            </div>
-            <TokenMetadataViewer />
-          </div>
-        )}
-      </main>
-
-      {/* Footer */}
-      <footer className="max-w-6xl mx-auto mt-16 pt-8 border-t border-gray-200">
-        <div className="text-center text-gray-500">
-          <p className="mb-2">Built with ❤️ for the Solana ecosystem</p>
-          <p className="text-sm">
-            Make sure you're connected to Solana Devnet for testing
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
